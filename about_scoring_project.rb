@@ -31,6 +31,32 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   # You need to write this method
+  final_score = 0
+  frequency_map = {}
+  dice.each do |dice_value|
+    if frequency_map.key?(dice_value)
+      value = frequency_map[dice_value]
+      frequency_map[dice_value] = value+1
+    else
+      frequency_map[dice_value] = 1
+    end
+  end
+  
+  frequency_map.each do |key, value|
+    mod = value % 3
+    quotient = value / 3
+    case key
+    when 1
+      final_score += quotient * 1000 + mod * 100 
+    when 5
+      final_score += quotient * 500 + mod * 50
+    else
+      final_score += quotient * key * 100
+    end
+
+  end
+
+  return final_score
 end
 
 class AboutScoringProject < Neo::Koan
